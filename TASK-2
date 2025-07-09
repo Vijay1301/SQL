@@ -1,0 +1,76 @@
+
+use practice;
+
+create table customers(
+customer_id int auto_increment primary key,
+name varchar(200),
+city varchar(200)
+);
+
+insert into customers(name,city)
+values('Alice','New York'),
+('Bob','Chicago'),
+('Charlie','Miami');
+
+
+select * from customers;
+
+create table orders(
+order_id int,
+customer_id int,
+product varchar(100),
+foreign key(customer_id) references customers(customer_id)
+);
+
+insert into orders(order_id,customer_id,product)
+values(101,1,'Laptop'),
+(102,1,'Mouse'),
+(103,2,'Keyboard'),
+(104,3,'Monitor');
+
+
+select * from orders;
+
+-- Scenario: Get the list of customers who have placed orders.
+select
+cus.name as customer_name,
+ord.product as products
+from customers cus
+inner join orders ord on cus.customer_id=ord.customer_id;
+
+-- Scenario: Get all customers and their orders (if any).
+select
+cus.name as customer_name,
+ord.product as products
+from customers cus
+left join orders ord on cus.customer_id=ord.customer_id;
+
+-- Scenario: Show all orders and the customer who placed them (if known).
+select
+ord.product as products,
+cus.name as customer_name
+from customers cus
+right join orders ord on cus.customer_id=ord.customer_id;
+
+-- Scenario: Get customers who ordered a “Mouse”.
+select
+cus.name as customer_name,
+ord.product as products
+from customers cus
+inner join orders ord on cus.customer_id=ord.customer_id
+where ord.product='Mouse';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
